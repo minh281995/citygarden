@@ -41,7 +41,6 @@ To test view the output, point a serial monitor such as Putty at your Arduino.
 //   delay(1000);  // delay between reads
 // }
 
-#define RAINSENSOR_D_PIN 7
 #define RAINSENSOR_A_PIN 1
 
 #define RAINSENSOR_MIN 400
@@ -51,13 +50,11 @@ int rainStatus = 0;
 
 void getRainSensorValue()
 {
-  int rainSensorStatus = digitalRead(RAINSENSOR_D_PIN);
   int rainSensorRawData = analogRead(RAINSENSOR_A_PIN);
 
   Serial.print("Digital: "); Serial.println(rainSensorStatus);
   Serial.print("Analog: "); Serial.println(rainSensorRawData);
 
-  // if(rainSensorStatus == 0){
       if(rainSensorRawData > RAINSENSOR_MAX){
           rainStatus = 1;
       }
@@ -65,11 +62,6 @@ void getRainSensorValue()
           rainStatus = -1;
       }
       else rainStatus = 0;
-  // }
-  // else 
-  // {
-  //   rainStatus = 1;
-  // }
 
   Serial.print("Rain Status: ");
   switch (rainStatus) {
@@ -82,16 +74,12 @@ void getRainSensorValue()
       case 1:
         Serial.println("Not Raining!");
   }
-
 }
 
 void setup()
 {
   Serial.begin(115200);
-  pinMode(RAINSENSOR_D_PIN, INPUT);
 }
-
-
 
 void loop()
 {

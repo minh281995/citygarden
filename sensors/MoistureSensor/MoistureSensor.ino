@@ -3,8 +3,8 @@
 #define SOILMOTURE_A_PIN 0 
 
 // Water level of plant
-#define WATERLEVER_MAX 600
-#define WATERLEVEL_MIN 200
+#define WATERLEVER_MAX 800
+#define WATERLEVEL_MIN 400
 
 int waterLevelStatus = 0; 
 
@@ -16,13 +16,16 @@ void setupSoilMoistureSensor()
 int getSoilMoistureValue()
 {
 	int soilMoistureSensorStatus = digitalRead(SOILMOISTURE_D_PIN);
-	int timeToGetSample = 50;
+	int timeToGetSample = 10;
 	int totalSoilMoistureValue =0;
 	for(int counter=0; counter<timeToGetSample; counter++){
 	    totalSoilMoistureValue += analogRead(SOILMOTURE_A_PIN);
 	    delay(timeToGetSample);
-	  }
+	}
   	int	soilMoistureValue = totalSoilMoistureValue / timeToGetSample;
+
+	// int soilMoistureValue = analogRead(SOILMOTURE_A_PIN);
+
   	Serial.print("Value of Soil Moisture Sensor: "); Serial.println(soilMoistureValue);
 
 	Serial.print("Digital: "); Serial.println(soilMoistureSensorStatus);
@@ -66,5 +69,5 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 	getSoilMoistureValue();
-	delay(1000);
+	delay(2000);
 }
